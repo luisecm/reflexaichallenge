@@ -22,8 +22,17 @@ class salesPage extends BasePage {
   visit() {
     cy.visit("/");
   }
-  title() {
-    return cy.contains("Vristo");
+
+  openRevenueMenu() {
+    this.revenueMenuButton().click();
+  }
+
+  openSummaryMenu() {
+    this.summaryMenuButton().click();
+  }
+
+  openTransactionsMenu() {
+    this.transactionsMenuButton().click();
   }
 
   validatePanelsAreVisible() {
@@ -37,6 +46,24 @@ class salesPage extends BasePage {
     this.walletBalancePanel().should("be.visible");
     this.recentOrdersPanel().should("be.visible");
     this.topSellingProductsPanel().should("be.visible");
+  }
+
+  validateRevenueMenuOptions() {
+    cy.contains("Weekly").should("be.visible");
+    cy.contains("Monthly").should("be.visible");
+    cy.contains("Yearly").should("be.visible");
+  }
+
+  validateSummaryMenuOptions() {
+    cy.contains("View Report").should("be.visible");
+    cy.contains("Edit Report").should("be.visible");
+    cy.contains("Mark as Done").should("be.visible");
+  }
+
+  validateTransactionsMenuOptions() {
+    cy.contains("View Report").should("be.visible");
+    cy.contains("Edit Report").should("be.visible");
+    cy.contains("Mark as Done").should("be.visible");
   }
 }
 

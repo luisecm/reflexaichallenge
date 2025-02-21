@@ -22,12 +22,10 @@ describe("Sales Dashboard Tests", () => {
     cy.visit("/");
 
     // click on the 3 dot menu for the Revenue section
-    salesPage.revenueMenuButton().click();
+    salesPage.openRevenueMenu();
 
     // validate that the menu options are visible
-    cy.contains("Weekly").should("be.visible");
-    cy.contains("Monthly").should("be.visible");
-    cy.contains("Yearly").should("be.visible");
+    salesPage.validateRevenueMenuOptions();
   });
 
   it("04 - Functionality Tests: 3 dot menu works for Summary section", () => {
@@ -35,12 +33,10 @@ describe("Sales Dashboard Tests", () => {
     cy.visit("/");
 
     // click on the 3 dot menu for the Summary section
-    salesPage.summaryMenuButton().click();
+    salesPage.openSummaryMenu();
 
     // validate that the menu options are visible
-    cy.contains("View Report").should("be.visible");
-    cy.contains("Edit Report").should("be.visible");
-    cy.contains("Mark as Done").should("be.visible");
+    salesPage.validateSummaryMenuOptions();
   });
 
   it("05 - Functionality Tests: 3 dot menu works for Transactions section", () => {
@@ -48,12 +44,10 @@ describe("Sales Dashboard Tests", () => {
     cy.visit("/");
 
     // click on the 3 dot menu for the Summary section
-    salesPage.transactionsMenuButton().click();
+    salesPage.openTransactionsMenu();
 
     // validate that the menu options are visible
-    cy.contains("View Report").should("be.visible");
-    cy.contains("Edit Report").should("be.visible");
-    cy.contains("Mark as Done").should("be.visible");
+    salesPage.validateTransactionsMenuOptions();
   });
 
   it("06 - UI Verification:: Top bar buttons are showing on Sales Dashboard", () => {
@@ -64,24 +58,21 @@ describe("Sales Dashboard Tests", () => {
     salesPage.validateTopBarElements();
   });
 
-  it("07 - UI Verification: Validate that key components exist and match expected properties", () => {});
+  it("07 - Mobile Viewport Tests: Verify the Sales Dashboard is responsive", () => {
+    const sizes = ["iphone-8", "ipad-2", "ipad-mini", "samsung-s10"];
+    sizes.forEach((size) => {
+      // set the viewport to mobile
+      cy.viewport(size);
 
-  it("08 - Chart Interaction Tests: Verify tooltips and hover effects", () => {});
+      // visit the sales dashboard
+      cy.visit("/");
 
-  it("09 - Mobile Viewport Tests: Verify the Sales Dashboard is responsive", () => {
-    // set the viewport to mobile
-    cy.viewport("iphone-8");
+      // Validate all sections from sales dashboard are visible
+      salesPage.validatePanelsAreVisible();
 
-    // visit the sales dashboard
-    cy.visit("/");
-
-    // Validate all sections from sales dashboard are visible
-    salesPage.validatePanelsAreVisible();
-
-    // Validate user can click on dropdowns in mobile viewport
-    salesPage.revenueMenuButton().click();
-    cy.contains("Weekly").should("be.visible");
-    cy.contains("Monthly").should("be.visible");
-    cy.contains("Yearly").should("be.visible");
+      // Validate user can click on dropdowns in mobile viewport
+      salesPage.openRevenueMenu();
+      salesPage.validateRevenueMenuOptions();
+    });
   });
 });
